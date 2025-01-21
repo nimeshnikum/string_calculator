@@ -32,6 +32,10 @@ RSpec.describe StringCalculator do
       it "supports custom delimiters" do
         expect(string_calculator.add("//;\n1;2")).to eq(3)
       end
+
+      it "supports delimiters of any length" do
+        expect(string_calculator.add("//[***]\n1***2***3")).to eq(6)
+      end
     end
 
     it "raises an exception for negative numbers" do

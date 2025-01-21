@@ -16,10 +16,16 @@ class StringCalculator
 
   private
 
-  def extract_delimiters(numbers)
+  def extract_delimiters(numbers) # rubocop:disable Metrics/MethodLength
     if numbers.start_with?("//")
-      delimiters, numbers = numbers.split("\n", 2)
-      [delimiters[2..], numbers]
+      delimiter_section, numbers = numbers.split("\n", 2)
+      delimiters = if delimiter_section.match(/\[(.*?)\]/)
+                     Regexp.union(delimiter_section.scan(/\[(.*?)\]/).flatten)
+                   else
+                     delimiter_section[2..]
+                   end
+
+      [delimiters, numbers]
     else
       [/[,\n]/, numbers]
     end
