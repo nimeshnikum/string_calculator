@@ -4,13 +4,24 @@ class StringCalculator
   def add(numbers)
     return 0 if numbers.empty?
 
+    delimiters, numbers = extract_delimiters(numbers)
+
+    numbers = numbers.split(/#{delimiters}/).map(&:to_i)
+    negatives = numbers.select(&:negative?)
+
+    raise "negative numbers not allowed: #{negatives.join(', ')}" unless negatives.empty?
+
+    numbers.sum
+  end
+
+  private
+
+  def extract_delimiters(numbers)
     if numbers.start_with?("//")
       delimiters, numbers = numbers.split("\n", 2)
-      delimiters = delimiters[2..]
+      [delimiters[2..], numbers]
     else
-      delimiters = /[,\n]/
+      [/[,\n]/, numbers]
     end
-
-    numbers.split(delimiters).map(&:to_i).sum
   end
 end
