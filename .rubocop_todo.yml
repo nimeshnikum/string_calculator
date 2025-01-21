@@ -40,3 +40,6 @@ Style/RedundantReturn:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Metrics/BlockLength:
+  Enabled: false
